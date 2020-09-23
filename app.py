@@ -26,8 +26,6 @@ HeavyLifter(target_dir=tgt_dir_and_files_tuple[0],
             scraper_df=scrape_df,
             server_conn_string=cs)
 
-# TODO option to save as CSV or send to SQL
-
 # TODO create UI elements such as printing messages to terminal
 # best to create a printing function somewhere to handle formatting
 
