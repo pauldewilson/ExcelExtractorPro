@@ -3,9 +3,11 @@ from models.heavylifter import HeavyLifter
 from models.models import (get_dir_and_workbooks,
                            verify_target_scraper_workbook,
                            scrape_df_formatter)
+import time
+start = time.time()
 
 # generate the master scrape_df from scrape_targets.xlsx
-# formatting is done later to save because it is unnecessary if other, shorter checks fail first
+# formatting is done later to save time because it is unnecessary if other, shorter checks fail first
 scrape_df = verify_target_scraper_workbook()
 
 # verify SQL connection and create connection string
@@ -26,6 +28,8 @@ HeavyLifter(target_dir=tgt_dir_and_files_tuple[0],
             scraper_df=scrape_df,
             server_conn_string=cs)
 
+runtime = time.time() - start
+print(f"Took a total of {runtime} seconds, or {runtime/60} minutes")
 # TODO create UI elements such as printing messages to terminal
 # best to create a printing function somewhere to handle formatting
 

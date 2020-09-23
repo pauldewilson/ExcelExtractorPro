@@ -58,16 +58,28 @@ class HeavyLifter:
                         # making record of data type for casting in pandas later
                         data_types_dict[column_name] = df_filt_col['sql_data_type'].values[0]
 
+                        print("Extraction beginning")
                         if range_or_cell == 'cell':
+                            print("Cell")
                             data_dict[column_name] = ws[target_cell].value
+                            print("Cell Done.\n")
                         elif range_or_cell == 'range':
+                            print("Range.")
                             if range_type == 'row':
+                                #  iterate over each row in the target row and append value
+                                # TODO: Examine more efficient method of row iteration
+                                print("Row.")
+                                print(sql_table, sheet, column_name, target_range)
                                 data_dict[column_name] = [str(cell.value) for cell in ws[target_range][0]]
+                                print("Row done.")
                             elif range_type == 'column':
-                                data_dict[column_name] = [str(ws[target_range][n][0].value) for n in range(len(
-                                    ws[target_range]
-                                ))]
-
+                                print("Col.")
+                                #  iterate over each cell in the target column and append value
+                                data_dict[column_name] = []
+                                for cell in ws[target_range]:
+                                    data_dict[column_name].append(cell[0].value)
+                                print("Col done.")
+                            print("Range done.\n")
                     # adding in file and upload info
                     data_dict['file_name'] = file
                     data_dict['upload_utc'] = dt.utcnow()
@@ -79,6 +91,8 @@ class HeavyLifter:
                     except ValueError:
                         df = pd.DataFrame(data=data_dict, dtype='object', index=[0])
 
+
+                    # TODO implement proper switch between SQL and CSV
                     df.to_sql(name=sql_table,
                               if_exists='append',
                               con=self.server_conn_string)
