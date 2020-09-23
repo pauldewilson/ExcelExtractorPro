@@ -15,7 +15,8 @@ def verify_target_scraper_workbook():
         return None
 
 
-def get_dir_and_workbooks(filepath=None):
+# TODO: remove the fixed path
+def get_dir_and_workbooks(filepath=r'C:\Users\me\Desktop\TEST'):
     """
     Recursive function
     Asks for user input until valid dir path is provided
