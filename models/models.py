@@ -2,7 +2,6 @@
 models.py will contain all models associated with this app
 """
 import os
-import sys
 import pandas as pd
 
 
@@ -12,12 +11,8 @@ def verify_target_scraper_workbook():
         scrape_df = pd.read_excel(file_target_scrapes, sheet_name='target_data')
         return scrape_df
     except FileNotFoundError:
-        #TODO print message
+        # TODO print message
         return None
-
-
-def verify_sql_connection():
-    conn_string = ""
 
 
 def get_dir_and_workbooks(filepath=None):
@@ -55,3 +50,19 @@ def get_dir_and_workbooks(filepath=None):
             # executes if no valid filepath is given in first instance
             print("Filepath not found")
             return get_dir_and_workbooks(filepath=None)
+
+
+def scrape_df_formatter(df):
+    """
+    Takes in the scrape dataframe and performs any necessary changes for use in the Python script
+    If a range is provided and not in the required format (same row, same col) then 0 returned
+    """
+    # ensure any ranges are valid
+    if True in df['is_range_valid'].str.contains('INVALID').unique():
+        # TODO print message
+        return 0
+    else:
+        # filly any blank instance of pandas_data_type with object to allow script to run
+        df['pandas_data_type'].fillna('object')
+        df['sql_data_type'].fillna('VARCHAR')
+        return df
