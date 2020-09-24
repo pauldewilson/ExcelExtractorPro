@@ -16,10 +16,8 @@ class ServerConnection:
         try:
             engine = create_engine(self.conn_string)
             engine.connect()
-            # TODO print msg
         except:
             print("Postgres Connection failed")
-            # TODO print msg
 
     def mssql_connection(self, db_name, host, driver='SQL+Server+Native+Client+11.0', trusted_connection='yes'):
         """
@@ -30,7 +28,5 @@ class ServerConnection:
         try:
             engine = create_engine(self.conn_string)
             engine.connect()
-            # TODO print msg
         except:
             print("MSSQL Connection failed")
-            # TODO print msg

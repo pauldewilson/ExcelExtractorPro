@@ -11,7 +11,7 @@ def verify_target_scraper_workbook():
         scrape_df = pd.read_excel(file_target_scrapes, sheet_name='target_data')
         return scrape_df
     except FileNotFoundError:
-        # TODO print message
+        print("scrape_targets.xlsx is not found, it must be included.")
         return None
 
 
@@ -59,7 +59,9 @@ def scrape_df_formatter(df):
     """
     # ensure any ranges are valid
     if True in df['is_range_valid'].str.contains('INVALID').unique():
-        # TODO print message
+        print("!"*50)
+        print("A provided range is invalid. Check scrape_targets.xlsx. Almost certainly an exception will throw.")
+        print("!"*50)
         return 0
     else:
         # filly any blank instance of pandas_data_type with object to allow script to run
