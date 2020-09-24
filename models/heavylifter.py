@@ -69,14 +69,12 @@ class HeavyLifter:
                                 time_row_start = time.time()
                                 #  iterate over each row in the target row and append value
                                 data_dict[column_name] = [str(cell.value) for cell in ws[target_range][0]]
-                                print(f"Row took {round(time.time()-time_row_start,2)}")
                             elif range_type == 'column':
                                 time_col_start = time.time()
                                 #  iterate over each cell in the target column and append value
                                 data_dict[column_name] = []
                                 for cell in ws[target_range]:
                                     data_dict[column_name].append(cell[0].value)
-                                print(f"Col took {round(time.time()-time_col_start,2)}")
                     # adding in file and upload info
                     data_dict['file_name'] = file
                     data_dict['upload_utc'] = dt.utcnow()
