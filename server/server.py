@@ -18,9 +18,19 @@ class ServerConnection:
             engine.connect()
             # TODO print msg
         except:
-            print("Connection failed")
+            print("Postgres Connection failed")
             # TODO print msg
 
-    def mssql_connection(self):
-        # TODO implement mssql server connection
-        pass
+    def mssql_connection(self, db_name, host, driver='SQL+Server+Native+Client+11.0', trusted_connection='yes'):
+        """
+        Trusted connection is windows auth.
+        If this is to change to SQL login then it must be changed
+        """
+        self.conn_string = f"mssql+pyodbc://@{host}/{db_name}?driver={driver}?trusted_connection={trusted_connection}"
+        try:
+            engine = create_engine(self.conn_string)
+            engine.connect()
+            # TODO print msg
+        except:
+            print("MSSQL Connection failed")
+            # TODO print msg
